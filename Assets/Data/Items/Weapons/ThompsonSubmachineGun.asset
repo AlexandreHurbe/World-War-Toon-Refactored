@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dbd02d168e0c5364f8facb71c6e58861, type: 3}
+  m_Name: ThompsonSubmachineGun
+  m_EditorClassIdentifier: 
+  currentBullets: 30
+  magazineBullets: 30
+  fireRate: 0.1
+  ammoType: {fileID: 11400000, guid: e757303bece6e3843b86df8d959abdb1, type: 2}
+  rightHandPosition: {fileID: 11400000, guid: b7c0c73b47c9946498e3bc28ddc12011, type: 2}
+  rightHandEulers: {fileID: 11400000, guid: 55052a5917682ba4592062ddae0892d9, type: 2}
+  modelPrefab: {fileID: 2079073070766644437, guid: bb2c78dd2ac37fb4a92c03a9e996fc86,
+    type: 3}
+  recoilY:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  recoilZ:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
