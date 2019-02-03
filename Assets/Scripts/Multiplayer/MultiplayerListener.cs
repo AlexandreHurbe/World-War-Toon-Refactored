@@ -12,6 +12,8 @@ namespace SA
         public StateActions initLocalPlayer;
         public StateActions initClientPlayer;
 
+        public State vaultClient;
+
         private StateManager states;
         private Transform mTransform;
 
@@ -20,9 +22,14 @@ namespace SA
         {
             states = GetComponent<StateManager>();
             mTransform = this.transform;
+            object[] data = photonView.InstantiationData;
+            states.photonId = (int)data[0];
 
             MultiplayerManager m = MultiplayerManager.singleton;
             this.transform.parent = m.GetMRef().referencesParent;
+
+            PlayerHolder playerHolder = m.GetMRef().GetPlayer(states.photonId);
+            playerHolder.states = states;
 
             if (photonView.IsMine)
             {
@@ -32,6 +39,11 @@ namespace SA
             }
             else
             {
+                
+                string weaponId = (string) data[1];
+                Debug.Log("Weapon ID: " + weaponId);
+                states.inventory.weaponID = weaponId;
+
                 states.isLocal = false;
                 states.SetCurrentState(client);
                 initClientPlayer.Execute(states);
@@ -49,12 +61,24 @@ namespace SA
                 stream.SendNext(mTransform.rotation);
 
                 //Sending booleans
-                stream.SendNext(states.isAiming);
+                stream.SendNext(states.isVaulting);
+                if (!states.isVaulting)
+                {
+                    stream.SendNext(states.isCrouching);
+                    stream.SendNext(states.isAiming);
+                    stream.SendNext(states.shootingFlag);
+                    states.shootingFlag = false;
+                    stream.SendNext(states.reloadingFlag);
+                    states.reloadingFlag = false;
 
-                //Sending horizontal and vertical movement values
-                stream.SendNext(states.movementValues.horizontal);
-                stream.SendNext(states.movementValues.vertical);
-                
+                    //Sending horizontal and vertical movement values
+                    stream.SendNext(states.movementValues.horizontal);
+                    stream.SendNext(states.movementValues.vertical);
+                }
+
+                //Sending aim position
+                stream.SendNext(states.movementValues.aimPosition);
+
             }
             //receiving data
             else
@@ -65,14 +89,53 @@ namespace SA
                 ReceivePositionRotation(position, rotation);
 
                 //Receving booleans
-                states.isAiming = (bool)stream.ReceiveNext();
-                
-                
+                states.isVaulting = (bool)stream.ReceiveNext();
+                if (states.isVaulting)
+                {
+                    //Setting other booleans as false while vaulting since they cannot happen
+                    states.isCrouching = false;
+                    states.isAiming = false;
+                    states.isShooting = false;
+                    states.isReloading = false;
 
-                //Receiving horizontal and vertical movement values
-                states.movementValues.horizontal = (float)stream.ReceiveNext();
-                states.movementValues.vertical = (float)stream.ReceiveNext();
-                states.movementValues.moveAmount = Mathf.Clamp01(Mathf.Abs(states.movementValues.horizontal) + Mathf.Abs(states.movementValues.vertical));
+                    //Setting horizontal and vertical movement values
+                    states.movementValues.horizontal = 0;
+                    states.movementValues.vertical = 0;
+                    //Setting move amounts while vaulting
+                    states.movementValues.moveAmount = 0;
+
+                    if (!states.vaultingFlag)
+                    {
+                        states.vaultingFlag = true;
+                        states.anim.CrossFade(states.hashes.VaultWalk, 0.15f);
+                        states.currentState = vaultClient;
+                    }
+
+                }
+                else
+                {
+                    if (states.vaultingFlag)
+                    {
+                        states.vaultingFlag = false;
+                        states.currentState = client;
+                    }
+
+                    //Receving booleans if not vaulting
+                    states.isCrouching = (bool)stream.ReceiveNext();
+                    states.isAiming = (bool)stream.ReceiveNext();
+                    states.isShooting = (bool)stream.ReceiveNext();
+                    states.isReloading = (bool)stream.ReceiveNext();
+
+                    //Receiving horizontal and vertical movement values
+                    states.movementValues.horizontal = (float)stream.ReceiveNext();
+                    states.movementValues.vertical = (float)stream.ReceiveNext();
+                    //Calculating move amounts
+                    states.movementValues.moveAmount = Mathf.Clamp01(Mathf.Abs(states.movementValues.horizontal) + Mathf.Abs(states.movementValues.vertical));  
+                }
+
+                //Receiving aim position
+                states.movementValues.aimPosition = (Vector3)stream.ReceiveNext();
+
             }
         }
 

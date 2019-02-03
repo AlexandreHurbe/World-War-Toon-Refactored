@@ -7,7 +7,7 @@ namespace SA
     
     public class StateManager : MonoBehaviour, IHittable
     {
-     
+        
 
         [System.Serializable]
         public class MovementValues
@@ -20,6 +20,8 @@ namespace SA
             public Vector3 aimPosition;
         }
 
+        public int photonId;
+
         public bool isLocal;
         public bool isAiming;
         public bool isInteracting;
@@ -29,8 +31,12 @@ namespace SA
         public bool isVaulting;
         public bool isGrounded;
 
-        
+        public bool shootingFlag;
+        public bool reloadingFlag;
+        public bool vaultingFlag;
+        public bool healthChangedFlag = true;
 
+        public PlayerStats stats;
         public MovementValues movementValues;
         public Inventory inventory;
 
@@ -123,7 +129,14 @@ namespace SA
 
         public void OnHit(StateManager shooter, Weapon w, Vector3 dir, Vector3 pos)
         {
-            
+            stats.health -= w.ammoType.damageValue;
+            if (stats.health <= 0)
+            {
+                stats.health = 0;
+                //Raise event for death
+            }
+
+            healthChangedFlag = true;
         }
     }
 }

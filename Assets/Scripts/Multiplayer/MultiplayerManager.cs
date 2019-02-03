@@ -10,6 +10,8 @@ namespace SA {
 
         public static MultiplayerManager singleton;
 
+        public RayBallistics ballistics;
+
         void IPunInstantiateMagicCallback.OnPhotonInstantiate(PhotonMessageInfo info)
         {
             Debug.Log("Multiplayer Manager: OnPhotonInstantiate called");
@@ -23,7 +25,13 @@ namespace SA {
 
         private void InstantiateNetworkPrint()
         {
-            GameObject go = PhotonNetwork.Instantiate("NetworkPrint", Vector3.zero, Quaternion.identity, 0) as GameObject;
+            PlayerProfile profile = GameManagers.GetProfile();
+            //Size is 1 because there is only gun
+            object[] data = new object[1];
+            //0 index used for profile as the first item is gun
+            data[0] = profile.itemIds[0];
+
+            GameObject go = PhotonNetwork.Instantiate("NetworkPrint", Vector3.zero, Quaternion.identity, 0, data) as GameObject;
         }
 
         public void AddNewPlayer(NetworkPrint print)
@@ -52,6 +60,12 @@ namespace SA {
             mRef.localPlayer.print.InstantiateController(mRef.localPlayer.spawnPosition);
         }
 
+        public void BroadcastShootWeapon(StateManager states, Vector3 direction, Vector3 origin)
+        {
+            int photonId = states.photonId;
+            photonView.RPC("RPC_ShootWeapon", RpcTarget.All, photonId, direction, origin);
+        }
+
         #endregion
 
         #region RPCs
@@ -62,12 +76,6 @@ namespace SA {
            MultiplayerLauncher.singleton.LoadCurrentSceneActual(CreateController);
         }
 
-        //[PunRPC]
-        //public void RPC_CreateControllers()
-        //{
-        //    mRef.localPlayer.print.InstantiateController(mRef.localPlayer.spawnPosition);
-        //}
-
         [PunRPC]
         public void RPC_SetSpawnPositionForPlayer(int photonId, int spawnPosition)
         {
@@ -76,15 +84,37 @@ namespace SA {
                 mRef.localPlayer.spawnPosition = spawnPosition;
             }
         }
+
+        [PunRPC]
+        public void RPC_ShootWeapon(int photonId, Vector3 dir, Vector3 origin)
+        {
+            if (photonId == mRef.localPlayer.photonId)
+            {
+                return;
+            }
+
+            PlayerHolder shooter = mRef.GetPlayer(photonId);
+            if (shooter == null)
+            {
+                return;
+            }
+
+            ballistics.ClientShoot(shooter.states, dir, origin);
+
+        }
+
         #endregion
 
-       
 
+
+        #region Get/Set Methods
         public MultiplayerReferences GetMRef()
         {
             return mRef;
         }
 
+
+        #endregion
 
     }
 }

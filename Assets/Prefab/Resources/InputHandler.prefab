@@ -43,8 +43,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4e4cfed0c0978e468ee41eee5ee293b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fixedUpdateActions: []
+  startActions:
+  - {fileID: 11400000, guid: 27521dd09a4ac404dbb10aa9fc22dde6, type: 2}
+  fixedUpdateActions:
+  - {fileID: 11400000, guid: 8bf89eeb266378a49a9e67e67368fc73, type: 2}
   updateActions:
   - {fileID: 11400000, guid: 66ee5caa3a9cdf141838ab991d7a90b6, type: 2}
   - {fileID: 11400000, guid: 616121538dd18a545823820b48435355, type: 2}
   - {fileID: 11400000, guid: bfbe6543c18489a49ba3249a587881c2, type: 2}
+  - {fileID: 11400000, guid: 8e668f5d82c26dd4e8f3578dff634881, type: 2}

@@ -8,7 +8,9 @@ namespace SA
     {
         public override void Execute(StateManager states)
         {
+            states.anim.SetBool(states.hashes.isCrouching, states.isCrouching);
             states.anim.SetBool(states.hashes.aiming, states.isAiming);
+            
         }
     }
 }

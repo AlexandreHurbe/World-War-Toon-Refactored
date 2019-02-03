@@ -10,6 +10,7 @@ namespace SA {
         public int horizontal = Animator.StringToHash("horizontal");
         public int VaultWalk = Animator.StringToHash("Vault Walk");
         public int isInteracting = Animator.StringToHash("isInteracting");
+        public int isCrouching = Animator.StringToHash("crouch");
         public int aiming = Animator.StringToHash("aiming");
     }
 

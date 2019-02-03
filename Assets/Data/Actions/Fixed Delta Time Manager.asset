@@ -1,0 +1,16 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4188605007f0f594ca0db33c474d6f26, type: 3}
+  m_Name: Fixed Delta Time Manager
+  m_EditorClassIdentifier: 
+  variable: {fileID: 11400000, guid: 40e02b7d0437f6e4484c81863277a920, type: 2}
+  isFixed: 1

@@ -35,5 +35,7 @@ MonoBehaviour:
   - RPC_CreateControllers
   - RPC_SceneChange
   - RPC_SetSpawnPositionForPlayer
+  - RPC_PlaceEnvironmentParticle
+  - RPC_ShootWeapon
   DisableAutoOpenWizard: 1
   ShowSettings: 0

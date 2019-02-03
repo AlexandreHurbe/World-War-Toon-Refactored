@@ -49,7 +49,7 @@ namespace SA
                         //Ground is hit
                         result = true;
                         states.anim.SetBool(states.hashes.isInteracting, true);
-                        states.anim.CrossFade(states.hashes.VaultWalk, 0.2f);
+                        states.anim.CrossFade(states.hashes.VaultWalk, 0.15f);
                         states.vaultData.animLength = vaultWalkClip.length;
                         states.vaultData.isInit = false;
                         states.isVaulting = true;

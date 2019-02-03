@@ -18,6 +18,7 @@ namespace SA
                 {
                     if (!states.isInteracting)
                     {
+                        states.reloadingFlag = true;
                         states.isInteracting = true;
                         states.PlayAnimation("Rifle Reload");
                         states.anim.SetBool("isInteracting", true);
@@ -44,6 +45,7 @@ namespace SA
 
             if (states.isShooting)
             {
+                states.shootingFlag = true;
                 states.isShooting = false;
                 Weapon w = states.inventory.currentWeapon;
 

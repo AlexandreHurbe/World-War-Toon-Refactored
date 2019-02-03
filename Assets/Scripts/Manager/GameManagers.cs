@@ -6,6 +6,7 @@ namespace SA
 {
     public static class GameManagers 
     {
+        #region Object Pooler
         private static ObjectPooler objectPooler;
         public static ObjectPooler GetObjectPool()
         {
@@ -17,7 +18,15 @@ namespace SA
 
             return objectPooler;
         }
+        #endregion
 
+        private static PlayerProfile profile;
+        public static PlayerProfile GetProfile()
+        {
+            return Resources.Load("PlayerProfile") as PlayerProfile;
+        }
+
+        #region Resources Manager
         private static ResourcesManager resourcesManager;
         public static ResourcesManager GetResourcesManager()
         {
@@ -29,9 +38,10 @@ namespace SA
 
             return resourcesManager;
         }
+        #endregion
 
+        #region Ammo pool
         static AmmoPool ammoPool;
-
         public static AmmoPool GetAmmoPool()
         {
             if (ammoPool == null)
@@ -42,6 +52,7 @@ namespace SA
 
             return ammoPool;
         }
+        #endregion
     }
 }
 
