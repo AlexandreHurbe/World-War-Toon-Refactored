@@ -41,13 +41,14 @@ namespace SA {
             }
         }
 
-        //This function not be neccessary thanks to PUN2
+        //This function may  not be neccessary thanks to PUN2
         private RoomButton GetRoomFromDict(string id)
         {
             RoomButton result = null;
             roomsDict.TryGetValue(id, out result);
             return result;
         }
+
         //This function not be neccessary thanks to PUN2
         public void AddMatches(List<RoomInfo> rooms)
         {

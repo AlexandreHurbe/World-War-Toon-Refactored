@@ -23,9 +23,11 @@ namespace SA
         public PunLogLevel logLevel = PunLogLevel.ErrorsOnly;
         public int gameVersion = 1;
         public SO.GameEvent onConnectedToMaster;
+        public SO.GameEvent onBackToMenuFromGame;
         public SO.GameEvent onJoinedRoom;
         public SO.BoolVariable isConnected;
         public SO.BoolVariable isMultiplayer;
+        public SO.BoolVariable isWinner;
 
         #region Init
         private void Awake()
@@ -152,6 +154,7 @@ namespace SA
 
         private void InstantiateMultiplayerManager()
         {
+            Debug.Log("(0) Multiplayer Launcher: InstantiateMultiplayerManager");
             if (PhotonNetwork.IsMasterClient)
             {
                 PhotonNetwork.Instantiate("MultiplayerManager", Vector3.zero, Quaternion.identity, 0);
@@ -201,6 +204,7 @@ namespace SA
         //Gets called by an event
         public void LoadCurrentRoom()
         {
+            Debug.Log("(7) Multiplayer Launcher: LoadCurrentRoom called");
             if (isConnected)
             {
                 MultiplayerManager.singleton.BroadcastSceneChange();
@@ -245,8 +249,37 @@ namespace SA
         #endregion
 
         #region Setup Methods
+        
+        public void EndMatch(MultiplayerManager mm, bool isWinner)
+        {
+            if (PhotonNetwork.InRoom)
+            {
+                PhotonNetwork.LeaveRoom();
+            }
+
+            this.isWinner.value = isWinner;
+            mm.ClearReferences();
+            LoadMainMenuFromGame();
+        }
+
+        private void OnMainMenuLoadedCallback()
+        {
+            onBackToMenuFromGame.Raise();
+
+
+            isWinner.value = false;
+        }
+
+        private void LoadMainMenuFromGame()
+        {
+            StartCoroutine(LoadScene("MainMenu", OnMainMenuLoadedCallback));
+        }
+
         public void OnMainMenu()
         {
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+
             isConnected.value = PhotonNetwork.IsConnected;
             if (isConnected.value)
             {
@@ -257,6 +290,7 @@ namespace SA
                 ConnectToServer();
             }
         }
+
         #endregion
     }
 }

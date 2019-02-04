@@ -20,6 +20,15 @@ namespace SA
             {
                 actionStack[i].Execute(states);
             }
+
+            Rigidbody[] rigidbodies = states.mTransform.GetComponentsInChildren<Rigidbody>();
+            foreach (Rigidbody r in rigidbodies)
+            {
+                if (r == states.rigidbody)
+                {
+                    continue;
+                }
+            }
         }
     }
 }

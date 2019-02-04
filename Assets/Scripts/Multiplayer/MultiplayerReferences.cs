@@ -8,7 +8,7 @@ namespace SA
     public class MultiplayerReferences
     {
         List<PlayerHolder> players = new List<PlayerHolder>();
-
+        public SpawnPosition[] spawnPositions = new SpawnPosition[4];
         public PlayerHolder localPlayer;
         public Transform referencesParent;
 
@@ -23,13 +23,14 @@ namespace SA
             return players.Count;
         }
 
-        public List<PlayerHolder> GetPLayers()
+        public List<PlayerHolder> GetPlayers()
         {
             return players;
         }
 
         public PlayerHolder AddNewPlayer(NetworkPrint p)
         {
+            Debug.Log("(5) MultiplayerReferences: AddNewPlayer called");
             if (!IsUniquePlayer(p.photonId))
             {
                 return null;
@@ -38,7 +39,8 @@ namespace SA
             PlayerHolder playerHolder = new PlayerHolder
             {
                 photonId = p.photonId,
-                print = p
+                print = p,
+                health = 100
             };          
             players.Add(playerHolder);
             return playerHolder;
@@ -63,11 +65,11 @@ namespace SA
             {
                 if (players[i].photonId == id)
                 {
-                    Debug.Log("Not a unique player id");
+                    Debug.Log("(6) Multiplayer References: Not a unique player id");
                     return false;
                 }
             }
-            Debug.Log("ID given is unique"); 
+            Debug.Log("(6) Multiplayer References: ID given is unique"); 
             return true;
         }
     }

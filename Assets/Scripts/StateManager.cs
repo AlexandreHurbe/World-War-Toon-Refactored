@@ -26,6 +26,7 @@ namespace SA
         public bool isAiming;
         public bool isInteracting;
         public bool isShooting;
+        public bool isDead;
         public bool isCrouching;
         public bool isReloading;
         public bool isVaulting;
@@ -41,7 +42,10 @@ namespace SA
         public Inventory inventory;
 
         public State currentState;
-
+        [HideInInspector]
+        public List<Rigidbody> ragdollRB = new List<Rigidbody>();
+        [HideInInspector]
+        public List<Collider> ragdollCols = new List<Collider>();
         [HideInInspector]
         public Animator anim;
         [HideInInspector]
@@ -73,7 +77,9 @@ namespace SA
             anim = GetComponentInChildren<Animator>();
             hashes = new AnimHashes();
             vaultData = new VaultData();
-            
+            stats.health = 100;
+            healthChangedFlag = true;
+
             if (isOfflineController)
             {
                 offlineActions.Execute(this);
@@ -83,6 +89,12 @@ namespace SA
 
         private void FixedUpdate()
         {
+            if (isDead)
+            {
+                return;
+            }
+
+
             delta = Time.fixedDeltaTime;
 
             if (currentState != null)
@@ -93,6 +105,11 @@ namespace SA
 
         private void Update()
         {
+            if (isDead)
+            {
+                return;
+            }
+
             delta = Time.deltaTime;
             if(currentState != null)
             {
@@ -127,16 +144,72 @@ namespace SA
             anim.CrossFade(targetAnim, 0.2f);
         }
 
-        public void OnHit(StateManager shooter, Weapon w, Vector3 dir, Vector3 pos)
+        public void SpawnPlayer(Vector3 spawnPosition, Quaternion rotation)
         {
-            stats.health -= w.ammoType.damageValue;
-            if (stats.health <= 0)
+            if (isLocal)
             {
-                stats.health = 0;
-                //Raise event for death
+                //If this is the local player then set these values
+                
             }
 
+            //Set the client/local to the following variables
+            stats.health = 100;
             healthChangedFlag = true;
+            mTransform.position = spawnPosition;
+            mTransform.rotation = rotation;
+            anim.Play("Locomotion Normal");
+            anim.Play("Empty Override");
+            isDead = false;
+        }
+
+        public void KillPlayer()
+        {
+            isDead = true;
+            anim.CrossFade("Death from Front Headshot", 0.4f);
+        }
+
+        public void OnHit(StateManager shooter, Weapon w, Vector3 dir, Vector3 pos)
+        {
+            Debug.Log("Player has been hit by: " + shooter.photonId);
+            GameObject hitParticle = GameManagers.GetObjectPool().RequestObject("BloodSplat_FX");
+            Quaternion rot = Quaternion.LookRotation(-dir);
+            hitParticle.transform.position = pos;
+            hitParticle.transform.rotation = rot;
+
+            if (Photon.Pun.PhotonNetwork.IsMasterClient)
+            {
+                if (!isDead)
+                {
+                    
+                    stats.health -= w.ammoType.damageValue;
+                    MultiplayerManager mm = MultiplayerManager.singleton;
+                    mm.BroadcastPlayerHealth(photonId, stats.health, shooter.photonId);
+
+                    if (stats.health <= 0)
+                    {
+                        Debug.Log("Player: " + this.photonId + " has been killed by: " + shooter.photonId);
+                        isDead = true;
+                    }
+                }
+            }
+
+            
+
+            //stats.health -= w.ammoType.damageValue;
+            //if (stats.health <= 0)
+            //{
+
+            //    stats.health = 0;
+            //    //Raise event for death
+            //    if (!isDead)
+            //    {
+            //        isDead = true;
+            //        MultiplayerManager.singleton.BroadcastKillPlayer(photonId, shooter.photonId);
+            //        KillPlayer();
+            //    }
+            //}
+
+            //healthChangedFlag = true;
         }
     }
 }

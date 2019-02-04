@@ -53,9 +53,16 @@ namespace SA
 
         public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
         {
+            if (states.isDead)
+            {
+                return;
+            }
+
             //sending data
             if (stream.IsWriting)
             {
+                
+
                 //Sending Position and rotation
                 stream.SendNext(mTransform.position);
                 stream.SendNext(mTransform.rotation);
@@ -83,6 +90,7 @@ namespace SA
             //receiving data
             else
             {
+
                 //Receiving Position and rotation and related functions
                 Vector3 position = (Vector3)stream.ReceiveNext();
                 Quaternion rotation = (Quaternion)stream.ReceiveNext();

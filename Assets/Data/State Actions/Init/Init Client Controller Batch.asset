@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 74f7f776212986043b62356b0bdf4a9a, type: 3}
+  m_Name: Init Client Controller Batch
+  m_EditorClassIdentifier: 
+  actionStack:
+  - {fileID: 11400000, guid: 57951c8f87157a245b8827e8c0bbc367, type: 2}
+  - {fileID: 11400000, guid: cb81afa7a2715ae44b0dce03f374226f, type: 2}
+  - {fileID: 11400000, guid: fc4c04f96a594d94d9f71c69bcb6993c, type: 2}

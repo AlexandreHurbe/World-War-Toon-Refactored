@@ -42,7 +42,7 @@ namespace SA
                 playerStates.value.movementValues.vertical = vertical.value;
                 playerStates.value.movementValues.moveAmount = moveAmount;
                 playerStates.value.movementValues.moveDirection = moveDir;
-                playerStates.value.movementValues.lookDirection = cameraTransform.value.forward;
+                
                 playerStates.value.isShooting = shootInput.isPressed;
                 playerStates.value.isAiming = aimInput.isPressed;
                 
@@ -59,21 +59,18 @@ namespace SA
                 }
                 reloadInput.targetBoolVariable.value = playerStates.value.isReloading;
 
-                //Debug.Log(debugAim);
-                //if (debugAim)
-                //{
-                //    playerStates.value.isAiming = true;
-                //    aimInput.isPressed = true;
+                
+                if (cameraTransform.value != null)
+                {
+                    playerStates.value.movementValues.lookDirection = cameraTransform.value.forward;
+                }
 
-                //}
-                //else
-                //{
-                //    playerStates.value.isAiming = aimInput.isPressed;
-                //}
-
-
-                Ray ray = new Ray(pivotTransform.value.position, pivotTransform.value.forward);
-                playerStates.value.movementValues.aimPosition = ray.GetPoint(100);
+                if (pivotTransform.value != null)
+                {
+                    Ray ray = new Ray(pivotTransform.value.position, pivotTransform.value.forward);
+                    playerStates.value.movementValues.aimPosition = ray.GetPoint(100);
+                }
+                
             }
         }
     }

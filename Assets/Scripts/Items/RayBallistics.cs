@@ -18,7 +18,7 @@ namespace SA
             Debug.DrawLine(origin, dir);
             RaycastHit[] hits;
 
-            hits = Physics.RaycastAll(origin, dir, 100, states.ignoreLayers);
+            hits = Physics.RaycastAll(origin, dir, 100);
             if (hits == null)
             {
                 return;
@@ -35,6 +35,7 @@ namespace SA
 
             if (isHittable == null)
             {
+                Debug.Log("isHittable was null");
                 GameObject hitParticle = GameManagers.GetObjectPool().RequestObject("Bullet_Impact_FX");
                 Quaternion rot = Quaternion.LookRotation(-dir);
                 hitParticle.transform.position = closestHit.point;
@@ -42,6 +43,7 @@ namespace SA
             }
             else
             {
+                Debug.Log("The object hit is: " + closestHit);
                 isHittable.OnHit(states, w, dir, closestHit.point);
             }
 
@@ -87,14 +89,11 @@ namespace SA
 
         public void ClientShoot(StateManager states, Vector3 dir, Vector3 origin)
         {
-            Ray ray = new Ray(origin, dir);
-            RaycastHit hit;
+            Ray ray = new Ray(origin, dir);       
             Debug.DrawLine(origin, dir);
-
-
             RaycastHit[] hits;
 
-            hits = Physics.RaycastAll(origin, dir, 100, states.ignoreLayers);
+            hits = Physics.RaycastAll(origin, dir, 100);
             if (hits == null)
             {
                 return;
@@ -119,6 +118,7 @@ namespace SA
             else
             {
                 isHittable.OnHit(states, states.inventory.currentWeapon, dir, closestHit.point);
+                
             }
 
 

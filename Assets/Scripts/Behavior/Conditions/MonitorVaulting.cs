@@ -26,7 +26,7 @@ namespace SA
             Vector3 direction = states.mTransform.forward;
 
             Debug.DrawRay(origin, direction * rayForwardDis);
-            if (Physics.Raycast(origin, direction, out hit, rayForwardDis))
+            if (Physics.Raycast(origin, direction, out hit, rayForwardDis, states.ignoreLayers))
             {
                 Vector3 origin2 = origin;
                 origin2.y += origin2Offset;
@@ -36,7 +36,7 @@ namespace SA
                 Vector3 normalDir = -hit.normal;
 
                 Debug.DrawRay(origin2, direction * rayForwardDis);
-                if (Physics.Raycast(origin2, direction, out hit, rayHigherForwardDis))
+                if (Physics.Raycast(origin2, direction, out hit, rayHigherForwardDis, states.ignoreLayers))
                 {
 
                 }
@@ -44,7 +44,7 @@ namespace SA
                 {
                     Vector3 origin3 = origin2 + (direction * rayHigherForwardDis);
                     Debug.DrawRay(origin3, -Vector3.up * rayDownDis);
-                    if (Physics.Raycast(origin3, -Vector3.up, out hit, rayDownDis))
+                    if (Physics.Raycast(origin3, -Vector3.up, out hit, rayDownDis, states.ignoreLayers))
                     {
                         //Ground is hit
                         result = true;

@@ -14,6 +14,7 @@ namespace SA
 
         void IPunInstantiateMagicCallback.OnPhotonInstantiate(PhotonMessageInfo info)
         {
+            Debug.Log("(3) NetworkPrint: OnPhotonInstantiate called");
             MultiplayerManager mm = MultiplayerManager.singleton;
             //photonId = photonView.ownerID;
             //photonId = photonView.ViewID;
@@ -23,7 +24,7 @@ namespace SA
             mm.AddNewPlayer(this);
         }
 
-        public void InstantiateController(int spawnIndex)
+        public void InstantiateController(Vector3 pos, Quaternion r)
         {
             
             GameObject inputHandler = Instantiate(Resources.Load("InputHandler")) as GameObject;
@@ -31,8 +32,8 @@ namespace SA
             data[0] = photonId;
             data[1] = photonView.InstantiationData[0];
 
-            PhotonNetwork.Instantiate("MultiplayerController", Vector3.zero, Quaternion.identity, 0, data);
-
+            GameObject go = PhotonNetwork.Instantiate("MultiplayerController", pos, r, 0, data);
+            go.GetComponent<Rigidbody>().isKinematic = true;
         }
     }
 
