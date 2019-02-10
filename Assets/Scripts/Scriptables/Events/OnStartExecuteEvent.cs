@@ -12,6 +12,11 @@ namespace SA {
 
         private void Start()
         {
+            ExecuteUnityEvent();
+        }
+
+        public void ExecuteUnityEvent()
+        {
             onEnable.Invoke();
         }
     }

@@ -45,6 +45,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ballistics: {fileID: 11400000, guid: 9ad4cdfa58bab2545912a09422ca193e, type: 2}
+  startingTime: 10
+  timerInSeconds: {fileID: 11400000, guid: b0924307cd05dd74fac402ead217993e, type: 2}
+  timerUpdate: {fileID: 11400000, guid: e9f1d6bee45d7884ea7ce09c70e6fbb2, type: 2}
 --- !u!114 &804
 MonoBehaviour:
   m_ObjectHideFlags: 0

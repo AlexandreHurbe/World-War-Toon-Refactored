@@ -170,6 +170,11 @@ namespace SA
 
         public void OnHit(StateManager shooter, Weapon w, Vector3 dir, Vector3 pos)
         {
+            if (shooter == this)
+            {
+                return;
+            }
+
             Debug.Log("Player has been hit by: " + shooter.photonId);
             GameObject hitParticle = GameManagers.GetObjectPool().RequestObject("BloodSplat_FX");
             Quaternion rot = Quaternion.LookRotation(-dir);
@@ -192,24 +197,7 @@ namespace SA
                     }
                 }
             }
-
             
-
-            //stats.health -= w.ammoType.damageValue;
-            //if (stats.health <= 0)
-            //{
-
-            //    stats.health = 0;
-            //    //Raise event for death
-            //    if (!isDead)
-            //    {
-            //        isDead = true;
-            //        MultiplayerManager.singleton.BroadcastKillPlayer(photonId, shooter.photonId);
-            //        KillPlayer();
-            //    }
-            //}
-
-            //healthChangedFlag = true;
         }
     }
 }

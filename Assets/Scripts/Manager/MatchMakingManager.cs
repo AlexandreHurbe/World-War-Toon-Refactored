@@ -56,17 +56,22 @@ namespace SA {
 
             foreach (RoomInfo room in rooms)
             {
-                RoomButton createdRoom = GetRoomFromDict(room.Name);
-                Debug.Log(createdRoom);
-                if (createdRoom == null)
+                //RoomButton createdRoom = GetRoomFromDict(room.Name);
+                //Debug.Log(createdRoom);
+
+                if (room.RemovedFromList == false)
                 {
-                    Debug.Log("New match found");
-                    AddMatch(room);
-                }
-                else
-                {
-                    Debug.Log("Match is still there");
-                    createdRoom.isValid = true;
+                    RoomButton createdRoom = GetRoomFromDict(room.Name);
+                    if (createdRoom == null)
+                    {
+                        Debug.Log("New match found");
+                        AddMatch(room);
+                    }
+                    else
+                    {
+                        Debug.Log("Match is still there");
+                        createdRoom.isValid = true;
+                    }
                 }
             }
 

@@ -121,18 +121,6 @@ namespace SA
         public override void OnRoomListUpdate(List<RoomInfo> roomList)
         {
             Debug.Log("roomList updating, number of lobbies found: " + roomList.Count);
-            foreach (RoomInfo room in roomList)
-            {
-                if (room.IsOpen)
-                {
-                    Debug.Log("room is open");
-                }
-                else if (room.RemovedFromList || !room.IsOpen || !room.IsVisible)
-                {
-                    Debug.Log("Room has been removed from list");
-                }
-            }
-            //UpdateRoomList(roomList);
             MatchMakingManager m = MatchMakingManager.singleton;
             m.AddMatches(roomList);
         }
@@ -265,9 +253,8 @@ namespace SA
         private void OnMainMenuLoadedCallback()
         {
             onBackToMenuFromGame.Raise();
-
-
             isWinner.value = false;
+            OnMainMenu();
         }
 
         private void LoadMainMenuFromGame()

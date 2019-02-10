@@ -12,6 +12,23 @@ namespace SA {
 
         public RayBallistics ballistics;
 
+        private bool isMaster;
+
+        private bool inGame;
+        private bool endMatch;
+
+        [SerializeField]
+        private float startingTime = 10;
+        private float currentTime;
+        private float timerInterval;
+        private float winKillCount = 20;
+
+        [SerializeField]
+        private SO.IntVariable timerInSeconds;
+        [SerializeField]
+        private SO.GameEvent timerUpdate;
+
+
         private List<PlayerHolder> playersToRespawn = new List<PlayerHolder>();
 
         void IPunInstantiateMagicCallback.OnPhotonInstantiate(PhotonMessageInfo info)
@@ -23,6 +40,9 @@ namespace SA {
             mRef = new MultiplayerReferences();
             DontDestroyOnLoad(mRef.referencesParent.gameObject);
             InstantiateNetworkPrint();
+            currentTime = startingTime;
+
+            isMaster = PhotonNetwork.IsMasterClient;
         }
 
         private void InstantiateNetworkPrint()
@@ -49,11 +69,42 @@ namespace SA {
 
         private void Update()
         {
-            
-            float delta = Time.deltaTime;
-            if (playersToRespawn == null)
+            if (endMatch)
             {
-                Debug.Log("playersToRespawn is null");
+                return;
+            }
+
+            float delta = Time.deltaTime;
+
+            if (inGame)
+            {
+                currentTime -= delta;
+                timerInterval += delta;
+
+                if (timerInterval > 1)
+                {
+                    timerInterval = 0;
+                    timerInSeconds.value = Mathf.RoundToInt(currentTime);
+                    timerUpdate.Raise();
+
+                    if (isMaster)
+                    {
+                        photonView.RPC("RPC_BroadcastTime", RpcTarget.All, currentTime);
+                    }
+
+                }
+
+                if (currentTime <= 0)
+                {
+                    if (isMaster)
+                    {
+                        TimerRunOut();
+                    }
+                }
+            }
+            
+            if (!isMaster)
+            {
                 return;
             }
 
@@ -64,23 +115,24 @@ namespace SA {
                 
                 if (playersToRespawn[i].spawnTimer > 5)
                 {
-                    Debug.Log("1");
+                    //Debug.Log("1");
                     playersToRespawn[i].spawnTimer = 0;
-                    Debug.Log("2");
+                    //Debug.Log("2");
                     playersToRespawn[i].health = 100;
-                    Debug.Log("3");
+                    //Debug.Log("3");
                     int ran = Random.Range(0, mRef.spawnPositions.Length);
-                    Debug.Log("4");
+                    //Debug.Log("4");
                     Vector3 pos = mRef.spawnPositions[ran].transform.position;
-                    Debug.Log("5");
+                    //Debug.Log("5");
                     Quaternion rot = mRef.spawnPositions[ran].transform.rotation;
-                    Debug.Log("6");
+                    //Debug.Log("6");
                     photonView.RPC("RPC_BroadcastPlayerHealth", RpcTarget.All, playersToRespawn[i].photonId, 100);
-                    Debug.Log("7");
+                    //Debug.Log("7");
                     photonView.RPC("RPC_SpawnPlayer", RpcTarget.All, playersToRespawn[i].photonId, pos, rot);
-                    Debug.Log("8");
+                    //Debug.Log("8");
                     playersToRespawn.RemoveAt(i);
-                    Debug.Log("9");
+                    //Debug.Log("9");
+                    
                 }
             }
         }
@@ -90,24 +142,41 @@ namespace SA {
         public void BroadcastSceneChange()
         {
             Debug.Log("MultiplayeManager: BroadcastSceneChange called");
-            if (PhotonNetwork.IsMasterClient)
+            if (isMaster)
             {
                 photonView.RPC("RPC_SceneChange", RpcTarget.All);
             }
         }
 
-        
+        public void TimerRunOut()
+        {
+            List<PlayerHolder> players = mRef.GetPlayers();
+            int killCount = 0;
+            int winnerId = -2;
+
+            for (int i = 0; i < players.Count; i++)
+            {
+                if (players[i].killCount > killCount)
+                {
+                    killCount = players[i].killCount;
+                    winnerId = players[i].photonId;
+                }
+            }
+
+            BroadcastMatchOver(winnerId);
+        }
 
         public void LevelLoadedCallback()
         {
             Debug.Log("MultiplayeManager: LevelLoadedCallback called");
             //after scene is loaded
-            if (PhotonNetwork.IsMasterClient)
+            if (isMaster)
             {
                 FindSpawnPositionsOnLevel();
                 AssignSpawnPositions();
             }
-            
+
+            inGame = true;
         }
 
         private void AssignSpawnPositions()
@@ -151,7 +220,7 @@ namespace SA {
             p.killCount++;
             photonView.RPC("RPC_SyncKillCount", RpcTarget.All, shooterId, p.killCount);
 
-            if (p.killCount >= 5)
+            if (p.killCount >= winKillCount)
             {
                 Debug.Log("Match Over");
                 BroadcastMatchOver(shooterId);
@@ -161,8 +230,8 @@ namespace SA {
         public void BroadcastMatchOver(int photonId)
         {
             photonView.RPC("RPC_BroadcastMatchOver", RpcTarget.All, photonId);
+            endMatch = true;
         }
-
 
         public void BroadcastPlayerHealth(int photonId, int health, int shooter)
         {
@@ -185,6 +254,16 @@ namespace SA {
         #endregion
 
         #region RPCs
+        [PunRPC]
+        public void RPC_BroadcastTime(float masterTime)
+        {
+            if (!isMaster)
+            {
+                this.currentTime = masterTime;
+            }
+        }
+
+
         [PunRPC]
         public void RPC_BroadcastMatchOver(int photonId)
         {
@@ -295,8 +374,6 @@ namespace SA {
         }
 
         #endregion
-
-
 
         #region Get/Set Methods
         public MultiplayerReferences GetMRef()
