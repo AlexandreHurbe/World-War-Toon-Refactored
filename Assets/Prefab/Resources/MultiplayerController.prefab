@@ -1518,6 +1518,7 @@ MonoBehaviour:
   reloadingFlag: 0
   vaultingFlag: 0
   healthChangedFlag: 1
+  leftPivot: {fileID: 11400000, guid: 858ce506e5124024eb20e4f1b2433152, type: 2}
   stats:
     health: 1000
   movementValues:

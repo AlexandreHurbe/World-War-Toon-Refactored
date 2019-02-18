@@ -15,6 +15,8 @@ namespace SA {
         public AnimationClip enterCoverStandingClip;
         public AnimationClip enterCoverCrouchingClip;
 
+        private Vector3 flip = new Vector3(0, 0, -1);
+
         public override bool CheckCondition(StateManager states)
         {
             bool result = false;
@@ -69,8 +71,17 @@ namespace SA {
                     endPosition.y = states.mTransform.position.y;
                     states.coverData.endPosition = endPosition;
                     Quaternion targetRotation = Quaternion.FromToRotation(Vector3.forward, hit.normal);
+                    Debug.Log(hit.normal);
                     Quaternion finalRotation = Quaternion.RotateTowards(states.mTransform.rotation, targetRotation, float.PositiveInfinity);
                     finalRotation.x = Mathf.Abs(finalRotation.x);
+                    if (finalRotation.x == 1)
+                    {
+                        Debug.Log("rotations changed");
+                        finalRotation.x = 0;
+                        finalRotation.y = 180;
+                    }
+                    
+                    Debug.Log(finalRotation.x);
                     states.coverData.startRotation = states.mTransform.rotation;
 
                     states.coverData.endRotation = finalRotation;

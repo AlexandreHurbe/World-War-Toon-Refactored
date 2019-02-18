@@ -50,6 +50,7 @@ namespace SA {
 
                 if (states.movementValues.horizontal < 0)
                 {
+                    states.leftPivot.value = true;
                     Vector3 predictedPoint = (states.mTransform.position + (states.mTransform.right * threshold));
                     if (!withinLimit(predictedPoint, -states.mTransform.forward, states.ignoreLayers)) {
                         states.rigidbody.velocity = Vector3.zero;
@@ -58,6 +59,7 @@ namespace SA {
                 }
                 else if (states.movementValues.horizontal > 0)
                 {
+                    states.leftPivot.value = false;
                     Vector3 predictedPoint = (states.mTransform.position + (-states.mTransform.right * threshold));
                     if (!withinLimit(predictedPoint, -states.mTransform.forward, states.ignoreLayers))
                     {
@@ -93,7 +95,7 @@ namespace SA {
             Debug.DrawRay(predictedPoint, direction, Color.blue);
             if (Physics.Raycast(predictedPoint, direction, out hit, 0.3f, ignoreLayers))
             {
-                Debug.Log("In contact with wall");
+                //Debug.Log("In contact with wall");
                 return true;
             }
             else

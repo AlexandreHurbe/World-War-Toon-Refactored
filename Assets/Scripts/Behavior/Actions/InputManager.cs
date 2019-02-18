@@ -24,6 +24,8 @@ namespace SA
         public float moveAmount;
         public Vector3 moveDir;
 
+        
+
         public SO.TransformVariable cameraTransform;
         public SO.TransformVariable pivotTransform;
 

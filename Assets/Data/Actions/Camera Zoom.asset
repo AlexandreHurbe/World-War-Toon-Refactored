@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetTransform: {fileID: 11400000, guid: 11f10817c2e959c41bb9daa3184231b4, type: 2}
   targetBool: {fileID: 11400000, guid: 76873bd83fa2c0e45a9379809a05b3ec, type: 2}
-  defaultValue: -3
-  affectedValue: 1.5
+  defaultValue: -1.5
+  affectedValue: 1
   targetAxis: 2
   speed: 5

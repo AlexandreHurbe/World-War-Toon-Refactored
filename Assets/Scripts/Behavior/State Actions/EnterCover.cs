@@ -12,11 +12,11 @@ namespace SA
             if (states.coverState == StateManager.CoverState.isEnteringCover)
             {
                 
-                Debug.Log("Player wants to and is entering cover");
+                //Debug.Log("Player wants to and is entering cover");
 
                 CoverData coverData = states.coverData;
                 //Debug.Log("Cover states is active");
-                Debug.Log(coverData.enterCoverRotation);
+                //Debug.Log(coverData.enterCoverRotation);
 
                 Debug.DrawRay(states.mTransform.position, states.mTransform.right * 10f, Color.red);
                 Debug.DrawRay(states.mTransform.position, -states.mTransform.right * 10f, Color.green);

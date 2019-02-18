@@ -45,12 +45,7 @@ namespace SA
         public bool canVault;
         public bool isWantingToVault;
 
-        //public bool canEnterCover;
-        //public bool isWantingToEnterCover;
-        //public bool isEnteringCover;
-        //public bool isInCover;
-        //public bool isWantingToLeaveCover;
-        //public bool isLeavingCover;
+        
         public CoverState coverState;
         public bool canEnterCover;
 
@@ -61,6 +56,11 @@ namespace SA
         public bool reloadingFlag;
         public bool vaultingFlag;
         public bool healthChangedFlag = true;
+
+        //public bool leftPivot;
+
+        public SO.BoolVariable leftPivot;
+
 
         public PlayerStats stats;
         public MovementValues movementValues;

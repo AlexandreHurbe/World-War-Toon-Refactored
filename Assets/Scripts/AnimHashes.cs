@@ -13,6 +13,7 @@ namespace SA {
         public int locomotionNormal = Animator.StringToHash("Locomotion Normal");
         public int isEnteringCoverStanding = Animator.StringToHash("isEnteringCoverStanding");
         public int isEnteringCoverCrouching = Animator.StringToHash("isEnteringCoverCrouching");
+        public int leftPivot = Animator.StringToHash("leftPivot");
         public int isCrouching = Animator.StringToHash("crouch");
         public int aiming = Animator.StringToHash("aiming");
     }

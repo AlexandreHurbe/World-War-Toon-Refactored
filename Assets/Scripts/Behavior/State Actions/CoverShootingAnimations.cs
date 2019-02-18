@@ -9,7 +9,7 @@ namespace SA
         {
             if (states.isAiming)
             {
-                
+
                 states.isInteracting = true;
                 states.anim.SetBool(states.hashes.isInteracting, true);
             }
@@ -19,6 +19,7 @@ namespace SA
                 states.anim.SetBool(states.hashes.isInteracting, false);
             }
             states.anim.SetBool(states.hashes.aiming, states.isAiming);
+            states.anim.SetBool(states.hashes.leftPivot, states.leftPivot.value);
         }
     }
 
