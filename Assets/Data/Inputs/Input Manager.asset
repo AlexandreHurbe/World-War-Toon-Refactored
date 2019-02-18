@@ -18,8 +18,11 @@ MonoBehaviour:
   shootInput: {fileID: 11400000, guid: 81d593cce832e574d8b048b3ebb41acd, type: 2}
   crouchInput: {fileID: 11400000, guid: c72794bed99757d48af2a65bdefeea92, type: 2}
   reloadInput: {fileID: 11400000, guid: fee463a9ad0132144b087f6619260592, type: 2}
+  sprintInput: {fileID: 11400000, guid: 8da9ad392c1ee5c41ab8296b6d8dcdcc, type: 2}
+  vaultInput: {fileID: 11400000, guid: d36a10a33fe7abe4fa9a2d7cb7b2cd67, type: 2}
+  coverInput: {fileID: 11400000, guid: 1fa19843335073141b78458ac9030f1c, type: 2}
   moveAmount: 0
-  moveDir: {x: 0, y: 0, z: 0}
+  moveDir: {x: -0, y: 0, z: 0}
   cameraTransform: {fileID: 11400000, guid: ec5905637b0fbc541a80ed16d2997171, type: 2}
   pivotTransform: {fileID: 11400000, guid: 013deeadf9bd57f42926846b6256d527, type: 2}
   playerStates: {fileID: 11400000, guid: b182b1c5475d97c4d8090a536006034d, type: 2}

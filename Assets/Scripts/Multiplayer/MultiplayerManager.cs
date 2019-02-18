@@ -18,7 +18,7 @@ namespace SA {
         private bool endMatch;
 
         [SerializeField]
-        private float startingTime = 10;
+        private float startingTime = 300;
         private float currentTime;
         private float timerInterval;
         private float winKillCount = 20;
@@ -48,10 +48,11 @@ namespace SA {
         private void InstantiateNetworkPrint()
         {
             PlayerProfile profile = GameManagers.GetProfile();
-            //Size is 1 because there is only gun
-            object[] data = new object[1];
+            //Size is based on player profile size
+            object[] data = new object[2];
             //0 index used for profile as the first item is gun
             data[0] = profile.itemIds[0];
+            data[1] = profile.modelId;
             Debug.Log("(2) MultiplayerManager: InstantiateNetworkPrint called");
             GameObject go = PhotonNetwork.Instantiate("NetworkPrint", Vector3.zero, Quaternion.identity, 0, data) as GameObject;
         }
@@ -110,29 +111,18 @@ namespace SA {
 
             for (int i = playersToRespawn.Count - 1; i >= 0; i--)
             {
-                //Debug.Log("playersToRespawn.Count: " + playersToRespawn.Count);
                 playersToRespawn[i].spawnTimer += delta;
                 
                 if (playersToRespawn[i].spawnTimer > 5)
                 {
-                    //Debug.Log("1");
                     playersToRespawn[i].spawnTimer = 0;
-                    //Debug.Log("2");
-                    playersToRespawn[i].health = 100;
-                    //Debug.Log("3");
+                    playersToRespawn[i].health = 100; 
                     int ran = Random.Range(0, mRef.spawnPositions.Length);
-                    //Debug.Log("4");
                     Vector3 pos = mRef.spawnPositions[ran].transform.position;
-                    //Debug.Log("5");
                     Quaternion rot = mRef.spawnPositions[ran].transform.rotation;
-                    //Debug.Log("6");
-                    photonView.RPC("RPC_BroadcastPlayerHealth", RpcTarget.All, playersToRespawn[i].photonId, 100);
-                    //Debug.Log("7");
-                    photonView.RPC("RPC_SpawnPlayer", RpcTarget.All, playersToRespawn[i].photonId, pos, rot);
-                    //Debug.Log("8");
-                    playersToRespawn.RemoveAt(i);
-                    //Debug.Log("9");
-                    
+                    photonView.RPC("RPC_BroadcastPlayerHealth", RpcTarget.All, playersToRespawn[i].photonId, 100);              
+                    photonView.RPC("RPC_SpawnPlayer", RpcTarget.All, playersToRespawn[i].photonId, pos, rot);                
+                    playersToRespawn.RemoveAt(i);                 
                 }
             }
         }
@@ -168,6 +158,7 @@ namespace SA {
 
         public void LevelLoadedCallback()
         {
+            MultiplayerLauncher.singleton.DisableUIAndCamera.Raise();
             Debug.Log("MultiplayeManager: LevelLoadedCallback called");
             //after scene is loaded
             if (isMaster)
@@ -177,6 +168,7 @@ namespace SA {
             }
 
             inGame = true;
+
         }
 
         private void AssignSpawnPositions()

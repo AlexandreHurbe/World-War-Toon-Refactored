@@ -12,5 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a0f5bdbc2906eb04fa06802764218eae, type: 3}
   m_Name: PlayerProfile
   m_EditorClassIdentifier: 
+  modelId: AmericanSoldier1
   itemIds:
   - ThompsonSubmachineGun
+  - M1911

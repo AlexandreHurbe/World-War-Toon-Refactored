@@ -17,9 +17,10 @@ namespace SA
 
             Transform rightHand = states.anim.GetBoneTransform(HumanBodyBones.RightHand);
             targetWeapon.runtime.modelInstance.transform.parent = rightHand;
+            targetWeapon.runtime.modelInstance.transform.localScale = (Vector3.one * 100);
             targetWeapon.runtime.modelInstance.transform.localPosition = Vector3.zero;
             targetWeapon.runtime.modelInstance.transform.localEulerAngles = Vector3.zero;
-            targetWeapon.runtime.modelInstance.transform.localScale = Vector3.one;
+            
 
             states.animHook.LoadWeapon(targetWeapon);
         }

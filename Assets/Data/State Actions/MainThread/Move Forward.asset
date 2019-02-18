@@ -12,5 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d8c444dfd6192845a00b8ab2774962f, type: 3}
   m_Name: Move Forward
   m_EditorClassIdentifier: 
+  frontRayOffset: 0.5
+  sprintSpeed: 6
   movementSpeed: 4
+  adaptSpeed: 15
   crouchSpeed: 2

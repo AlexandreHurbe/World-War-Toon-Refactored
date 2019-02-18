@@ -20,6 +20,16 @@ namespace SA
             public Vector3 aimPosition;
         }
 
+        public enum CoverState
+        {
+            none,
+            isWantingToEnterCover,
+            isEnteringCover,
+            isInCover,
+            isWantingToLeaveCover,
+            isLeavingCover
+        }
+
         public int photonId;
 
         public bool isLocal;
@@ -27,10 +37,25 @@ namespace SA
         public bool isInteracting;
         public bool isShooting;
         public bool isDead;
+        public bool isSprinting;
         public bool isCrouching;
         public bool isReloading;
+
         public bool isVaulting;
+        public bool canVault;
+        public bool isWantingToVault;
+
+        //public bool canEnterCover;
+        //public bool isWantingToEnterCover;
+        //public bool isEnteringCover;
+        //public bool isInCover;
+        //public bool isWantingToLeaveCover;
+        //public bool isLeavingCover;
+        public CoverState coverState;
+        public bool canEnterCover;
+
         public bool isGrounded;
+        
 
         public bool shootingFlag;
         public bool reloadingFlag;
@@ -60,7 +85,13 @@ namespace SA
         public AnimatorHook animHook;
         [HideInInspector]
         public VaultData vaultData;
+        [HideInInspector]
+        public CoverData coverData;
         public AnimHashes hashes;
+
+        [SerializeField]
+        private CharacterHook characterHook;
+        
 
         public Ballistics ballisticsAction;
 
@@ -72,19 +103,47 @@ namespace SA
 
         private void Start()
         {
+            InitReferences();
+            if (isOfflineController)
+            {
+                LoadCharacterModelFromProfile();
+
+                if (offlineActions != null)
+                {
+                    offlineActions.Execute(this);
+                }
+            }
+
+        }
+
+        public void InitReferences()
+        {
             mTransform = this.transform;
             rigidbody = GetComponent<Rigidbody>();
             anim = GetComponentInChildren<Animator>();
             hashes = new AnimHashes();
             vaultData = new VaultData();
+            coverData = new CoverData();
             stats.health = 100;
             healthChangedFlag = true;
+            characterHook = GetComponentInChildren<CharacterHook>();
+        }
 
-            if (isOfflineController)
+        public void LoadCharacterModel(string modelId)
+        {
+            ClothItem c = GameManagers.GetResourcesManager().GetClothItem(modelId);
+            if (characterHook == null)
             {
-                offlineActions.Execute(this);
+                InitReferences();
             }
+            characterHook.Init(c);
+        }
 
+        public void LoadCharacterModelFromProfile()
+        {
+            PlayerProfile profile = GameManagers.GetProfile();
+            Debug.Log("LoadCharacterModelFromProfile called: " + profile.modelId);
+            LoadCharacterModel(profile.modelId);
         }
 
         private void FixedUpdate()
@@ -105,6 +164,8 @@ namespace SA
 
         private void Update()
         {
+            
+
             if (isDead)
             {
                 return;
@@ -114,6 +175,11 @@ namespace SA
             if(currentState != null)
             {
                 currentState.Tick(this);
+            }
+
+            if (canVault && isWantingToVault)
+            {
+                //Debug.Log("The player can and wants to vault");
             }
         }
 
@@ -137,6 +203,11 @@ namespace SA
         public void SetReloading()
         {
             isReloading = true;
+        }
+
+        public void SetWantsToVault()
+        {
+            isWantingToVault = true;
         }
 
         public void PlayAnimation(string targetAnim)
@@ -197,7 +268,6 @@ namespace SA
                     }
                 }
             }
-            
         }
     }
 }

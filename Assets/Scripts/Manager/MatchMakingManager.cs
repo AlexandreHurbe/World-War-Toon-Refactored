@@ -61,6 +61,7 @@ namespace SA {
 
                 if (room.RemovedFromList == false)
                 {
+                    
                     RoomButton createdRoom = GetRoomFromDict(room.Name);
                     if (createdRoom == null)
                     {

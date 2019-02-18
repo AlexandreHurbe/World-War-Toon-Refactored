@@ -15,4 +15,8 @@ MonoBehaviour:
   allItems:
   - {fileID: 11400000, guid: 2274b3000731bae4b8c8cc4053ca870b, type: 2}
   - {fileID: 11400000, guid: 9a0b91bb1697a064a82b48c555247037, type: 2}
+  - {fileID: 11400000, guid: dce82ed7758d2b04082ba185e0efb981, type: 2}
+  - {fileID: 11400000, guid: 9757a121e96936b448fbc42d24ddbf89, type: 2}
+  - {fileID: 11400000, guid: 7a83c5be56c3df04c9bd24f1becb3623, type: 2}
+  - {fileID: 11400000, guid: 34a989376de71924ea688613bb5c81e3, type: 2}
   currentRoom: {fileID: 11400000, guid: cda711df931ee264dad482a9152ad784, type: 2}

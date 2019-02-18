@@ -8,10 +8,12 @@ namespace SA {
     {
         public float frontRayOffset = 0.5f;
         //This was initially set to 4
+        public float sprintSpeed = 4f;
         public float movementSpeed = 2;
         public float adaptSpeed = 10;
         public float crouchSpeed = 2f;
 
+        private Vector3 targetVelocity;
 
         public override void Execute(StateManager states)
         {
@@ -27,7 +29,19 @@ namespace SA {
             }
 
             Vector3 currentVelocity = states.rigidbody.velocity;
-            Vector3 targetVelocity = states.mTransform.forward * states.movementValues.moveAmount * movementSpeed;
+
+            if (states.isSprinting)
+            {
+                targetVelocity = states.mTransform.forward * states.movementValues.moveAmount * sprintSpeed;
+            }
+            else if (states.isCrouching)
+            {
+                targetVelocity = states.mTransform.forward * states.movementValues.moveAmount * crouchSpeed;
+            }
+            else
+            {
+                targetVelocity = states.mTransform.forward * states.movementValues.moveAmount * movementSpeed;
+            }
 
             if (states.isGrounded)
             {

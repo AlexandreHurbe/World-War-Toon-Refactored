@@ -10,7 +10,7 @@ namespace SA
         public override void Execute(StateManager states)
         {
             VaultData v = states.vaultData;
-
+            Debug.Log("Vault state is active");
             if (!v.isInit)
             {
                 v.vaultT = 0;

@@ -17,7 +17,6 @@ namespace SA {
             states.rigidbody.constraints = RigidbodyConstraints.FreezeRotation;
             states.ignoreLayers = ~(1 << 9 | 1 << 3);
 
-            Debug.Log(states.ignoreLayers);
 
             if (initActionsBatch != null)
             {

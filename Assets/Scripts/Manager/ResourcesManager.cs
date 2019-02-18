@@ -16,11 +16,8 @@ namespace SA
         {
             itemDict = new Dictionary<string, Item>();
 
-            Debug.Log("ALl items length: " + allItems.Count);
-            //Debug.Log("itemDict length: +" + itemDict.Count);
             for (int i = 0; i < allItems.Count; i++)
             {
-                Debug.Log(allItems[i].name);
                 if (!itemDict.ContainsKey(allItems[i].name))
                 {
                     itemDict.Add(allItems[i].name, allItems[i]);
@@ -41,6 +38,45 @@ namespace SA
 
             return newItem;
         }
+
+
+        public ClothItem GetClothItem(string targetId)
+        {
+            Item item = GetItem(targetId);
+            return (ClothItem)item;
+        } 
+
+        public List<ClothItem> GetAllClothItems()
+        {
+            List<ClothItem> r = new List<ClothItem>();
+
+            foreach (Item i in allItems)
+            {
+                if (i is ClothItem)
+                {
+                    r.Add((ClothItem)i);
+                }
+            }
+
+            return r;
+        }
+
+
+        public List<Weapon> GetAllWeapons()
+        {
+            List<Weapon> r = new List<Weapon>();
+
+            foreach (Item i in allItems)
+            {
+                if (i is Weapon)
+                {
+                    r.Add((Weapon)i);
+                }
+            }
+
+            return r;
+        }
+
 
         private Item GetItem(string targetID)
         {

@@ -164,10 +164,23 @@ namespace SA
 
         private void OnAnimatorIK()
         {
+            if (states.isDead)
+            {
+                return;
+            }
+
             HandleWeights();
 
-            anim.SetLookAtWeight(l_weight, b_weight, 1, 1, 1);
-            anim.SetLookAtPosition(states.movementValues.aimPosition);
+            if (states.coverState == StateManager.CoverState.none)
+            {
+                anim.SetLookAtWeight(l_weight, b_weight, 1, 1, 1);
+                anim.SetLookAtPosition(states.movementValues.aimPosition);
+            }
+            else
+            {
+
+            }
+            
 
             if (lh_target != null)
             {

@@ -15,10 +15,12 @@ namespace SA
         public float vaultOffsetPosition = 2;
 
         public AnimationClip vaultWalkClip;
+        
 
         public override bool CheckCondition(StateManager states)
         {
             bool result = false;
+            states.canVault = result;
 
             RaycastHit hit;
             Vector3 origin = states.mTransform.position;
@@ -48,22 +50,29 @@ namespace SA
                     {
                         //Ground is hit
                         result = true;
-                        states.anim.SetBool(states.hashes.isInteracting, true);
-                        states.anim.CrossFade(states.hashes.VaultWalk, 0.15f);
-                        states.vaultData.animLength = vaultWalkClip.length;
-                        states.vaultData.isInit = false;
-                        states.isVaulting = true;
-                        states.vaultData.startPosition = states.mTransform.position;
-                        Vector3 endPosition = firstHit;
-                        endPosition += normalDir * vaultOffsetPosition;
-                        states.vaultData.endingPosition = endPosition;
+                        if (states.isWantingToVault)
+                        {
+                            states.anim.SetBool(states.hashes.isInteracting, true);
+                            states.anim.CrossFade(states.hashes.VaultWalk, 0.15f);
+                            states.vaultData.animLength = vaultWalkClip.length;
+                            states.vaultData.isInit = false;
+                            states.isVaulting = true;
+                            states.vaultData.startPosition = states.mTransform.position;
+                            Vector3 endPosition = firstHit;
+                            endPosition += normalDir * vaultOffsetPosition;
+                            states.vaultData.endingPosition = endPosition;
+                        }
                     }
                 }
 
             }
 
+            states.canVault = result;
 
-            return result;
+            
+
+
+            return (result && states.isWantingToVault);
         }
 
     }

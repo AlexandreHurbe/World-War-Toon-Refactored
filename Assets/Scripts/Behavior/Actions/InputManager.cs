@@ -16,6 +16,10 @@ namespace SA
         public InputButton shootInput;
         public InputButton crouchInput;
         public InputButton reloadInput;
+        public InputButton sprintInput;
+        public InputButton vaultInput;
+        public InputButton coverInput;
+
 
         public float moveAmount;
         public Vector3 moveDir;
@@ -43,9 +47,40 @@ namespace SA
                 playerStates.value.movementValues.moveAmount = moveAmount;
                 playerStates.value.movementValues.moveDirection = moveDir;
                 
+
                 playerStates.value.isShooting = shootInput.isPressed;
+                //Debug.Log("Shoot input pressed: " + shootInput.isPressed);
+
                 playerStates.value.isAiming = aimInput.isPressed;
-                
+
+
+                playerStates.value.isSprinting = sprintInput.isPressed;
+
+                playerStates.value.isWantingToVault = vaultInput.isPressed;
+                //Debug.Log("Vault input pressed: " + vaultInput.isPressed);
+                //playerStates.value.isWantingToEnterCover = coverInput.isPressed;
+
+                if (coverInput.isPressed)
+                {
+
+                    if (playerStates.value.coverState == StateManager.CoverState.isInCover)
+                    {
+                        playerStates.value.coverState = StateManager.CoverState.isWantingToLeaveCover;
+                        Debug.Log("player is in cover and wants to leave now");
+                    }
+                    else if(playerStates.value.coverState == StateManager.CoverState.isEnteringCover || playerStates.value.coverState == StateManager.CoverState.isLeavingCover)
+                    {
+                        return;
+                    }
+                    else
+                    {
+                        playerStates.value.coverState = StateManager.CoverState.isWantingToEnterCover;
+                        Debug.Log("player wants to enter cover");
+
+                    }
+                    
+                }
+
 
                 if (crouchInput.isPressed)
                 {
@@ -58,6 +93,12 @@ namespace SA
                     playerStates.value.SetReloading();  
                 }
                 reloadInput.targetBoolVariable.value = playerStates.value.isReloading;
+
+                //if (vaultInput.isPressed)
+                //{
+                //    playerStates.value.SetWantsToVault();
+
+                //}
 
                 
                 if (cameraTransform.value != null)

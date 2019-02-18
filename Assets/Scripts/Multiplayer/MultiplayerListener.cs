@@ -21,15 +21,23 @@ namespace SA
         public void OnPhotonInstantiate(PhotonMessageInfo info)
         {
             states = GetComponent<StateManager>();
+            states.InitReferences();
             mTransform = this.transform;
             object[] data = photonView.InstantiationData;
+
             states.photonId = (int)data[0];
+            string modelId = (string)data[2];
+            states.LoadCharacterModel(modelId);
 
             MultiplayerManager m = MultiplayerManager.singleton;
             this.transform.parent = m.GetMRef().referencesParent;
 
             PlayerHolder playerHolder = m.GetMRef().GetPlayer(states.photonId);
             playerHolder.states = states;
+
+            string weaponId = (string)data[1];
+            Debug.Log("Weapon ID: " + weaponId);
+            states.inventory.weaponID = weaponId;
 
             if (photonView.IsMine)
             {
@@ -39,11 +47,6 @@ namespace SA
             }
             else
             {
-                
-                string weaponId = (string) data[1];
-                Debug.Log("Weapon ID: " + weaponId);
-                states.inventory.weaponID = weaponId;
-
                 states.isLocal = false;
                 states.SetCurrentState(client);
                 initClientPlayer.Execute(states);
@@ -71,6 +74,7 @@ namespace SA
                 stream.SendNext(states.isVaulting);
                 if (!states.isVaulting)
                 {
+                    stream.SendNext(states.isSprinting);
                     stream.SendNext(states.isCrouching);
                     stream.SendNext(states.isAiming);
                     stream.SendNext(states.shootingFlag);
@@ -101,6 +105,7 @@ namespace SA
                 if (states.isVaulting)
                 {
                     //Setting other booleans as false while vaulting since they cannot happen
+                    states.isSprinting = false;
                     states.isCrouching = false;
                     states.isAiming = false;
                     states.isShooting = false;
@@ -129,6 +134,7 @@ namespace SA
                     }
 
                     //Receving booleans if not vaulting
+                    states.isSprinting = (bool)stream.ReceiveNext();
                     states.isCrouching = (bool)stream.ReceiveNext();
                     states.isAiming = (bool)stream.ReceiveNext();
                     states.isShooting = (bool)stream.ReceiveNext();

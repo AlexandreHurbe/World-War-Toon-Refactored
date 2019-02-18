@@ -25,6 +25,8 @@ namespace SA
         public SO.GameEvent onConnectedToMaster;
         public SO.GameEvent onBackToMenuFromGame;
         public SO.GameEvent onJoinedRoom;
+        public SO.GameEvent DisableUIAndCamera;
+        public SO.GameEvent EnableUIAndCamera;
         public SO.BoolVariable isConnected;
         public SO.BoolVariable isMultiplayer;
         public SO.BoolVariable isWinner;
@@ -219,6 +221,7 @@ namespace SA
             {
                 isLoading = true;
                 StartCoroutine(LoadScene(r.sceneName, callback));
+                
             }
         }
 
@@ -228,9 +231,11 @@ namespace SA
 
             yield return SceneManager.LoadSceneAsync(targetLevel, LoadSceneMode.Single);
             isLoading = false;
+            DisableUIAndCamera.Raise();
             if (callback != null)
             {
                 callback.Invoke();
+                
             }
         }
 
@@ -252,6 +257,7 @@ namespace SA
 
         private void OnMainMenuLoadedCallback()
         {
+            EnableUIAndCamera.Raise();
             onBackToMenuFromGame.Raise();
             isWinner.value = false;
             OnMainMenu();
