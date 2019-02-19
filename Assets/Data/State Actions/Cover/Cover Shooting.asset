@@ -12,3 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 177e7f66885e52d40b90a03c33026e56, type: 3}
   m_Name: Cover Shooting
   m_EditorClassIdentifier: 
+  threshold: 0.5
+  yOffset: 1

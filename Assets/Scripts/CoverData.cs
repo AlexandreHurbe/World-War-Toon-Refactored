@@ -17,6 +17,7 @@ namespace SA {
         public float coverPosOffset = 0.08f;
 
         public bool canStand;
+        public bool atCorner;
 
         public float animLength;
         public float enterCoverPosT;
@@ -24,7 +25,21 @@ namespace SA {
         public bool isEnteringCoverInit;
         public bool isInit;
 
+        public bool canShootRight;
+        public bool canShootLeft;
 
+        public ShootDirection shootDirection;
+
+        public enum ShootDirection
+        {
+            none,
+            left,
+            right
+        };
     }
+
+
+   
+
 }
 

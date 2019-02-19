@@ -50,9 +50,9 @@ namespace SA
                 {
                     
                     Vector3 targetPosition = Vector3.Lerp(coverData.startPosition, coverData.endPosition, coverData.enterCoverPosT);
-                    //Quaternion targetRotation = Quaternion.Slerp(coverData.startRotation, coverData.endRotation, coverData.enterCoverRotT);
+                    Quaternion targetRotation = Quaternion.Slerp(coverData.startRotation, coverData.endRotation, coverData.enterCoverRotT);
                     states.mTransform.position = targetPosition;
-                    //states.mTransform.rotation = targetRotation;
+                    states.mTransform.rotation = targetRotation;
                 }
                 
             }

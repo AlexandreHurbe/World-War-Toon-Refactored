@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: Monitor Vaulting
   m_EditorClassIdentifier: 
   description: 
-  origin1Offset: 0.8
-  rayForwardDis: 1
-  rayHigherForwardDis: 1
-  origin2Offset: 0.2
-  rayDownDis: 1.5
-  vaultOffsetPosition: 2
+  origin1Offset: 0.75
+  rayForwardDis: 2.1
+  rayHigherForwardDis: 2.1
+  origin2Offset: 0.3
+  rayDownDis: 1.7
+  vaultOffsetPosition: 2.4
   vaultWalkClip: {fileID: 7400000, guid: a3bb9ae7b32c2404498076f3261727d7, type: 2}

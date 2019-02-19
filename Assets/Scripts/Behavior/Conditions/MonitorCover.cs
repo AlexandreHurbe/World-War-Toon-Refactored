@@ -45,12 +45,17 @@ namespace SA {
                 {
                     states.coverData.canStand = true;
                 }
+                else
+                {
+                    states.coverData.canStand = false;
+                }
 
                 if (states.coverState == StateManager.CoverState.isWantingToEnterCover)
                 {
                     states.anim.SetBool(states.hashes.isInteracting, true);
                     if (states.coverData.canStand)
                     {
+                        Debug.Log("Cover can stand");
                         states.anim.CrossFade(states.hashes.isEnteringCoverStanding, 0.15f);
                         states.coverData.animLength = enterCoverStandingClip.length;
                     }
@@ -58,16 +63,17 @@ namespace SA {
                     {
                         states.anim.CrossFade(states.hashes.isEnteringCoverCrouching, 0.15f);
                         states.coverData.animLength = enterCoverCrouchingClip.length;
+                        states.isCrouching = true;
                     }
 
                     states.coverData.isEnteringCoverInit = false;
-                    //states.isEnteringCover = true;
+                    
                     states.coverState = StateManager.CoverState.isEnteringCover;
                     states.coverData.startPosition = states.mTransform.position;
-                    //Debug.Log("The object hit was: " + hit.point.GetType());
+                    
                     Vector3 endPosition = firstHit;
                     endPosition = firstHit - (states.mTransform.forward * (states.coverData.coverPosOffset));
-                    //endPosition += normalDir * vaultOffsetPosition;
+                    
                     endPosition.y = states.mTransform.position.y;
                     states.coverData.endPosition = endPosition;
                     Quaternion targetRotation = Quaternion.FromToRotation(Vector3.forward, hit.normal);

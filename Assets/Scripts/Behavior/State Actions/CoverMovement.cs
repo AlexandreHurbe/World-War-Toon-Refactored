@@ -54,6 +54,11 @@ namespace SA {
                     Vector3 predictedPoint = (states.mTransform.position + (states.mTransform.right * threshold));
                     if (!withinLimit(predictedPoint, -states.mTransform.forward, states.ignoreLayers)) {
                         states.rigidbody.velocity = Vector3.zero;
+                        states.coverData.atCorner = true;
+                    }
+                    else
+                    {
+                        states.coverData.atCorner = false;
                     }
 
                 }
@@ -64,26 +69,17 @@ namespace SA {
                     if (!withinLimit(predictedPoint, -states.mTransform.forward, states.ignoreLayers))
                     {
                         states.rigidbody.velocity = Vector3.zero;
+                        states.coverData.atCorner = true;
+                    }
+                    else
+                    {
+                        states.coverData.atCorner = false;
                     }
                 }
                 else
                 {
                     return;
                 }
-                //Debug.Log(predictedPoint - states.mTransform.position);
-                //if (Physics.Raycast(predictedPoint, ))
-                //RaycastHit hit;
-                //Debug.DrawRay(predictedPoint, -states.mTransform.forward * 0.5f, Color.blue);
-                //if (Physics.Raycast(predictedPoint, -states.mTransform.forward, out hit, 0.3f, states.ignoreLayers))
-                //{
-                //    Debug.Log("In contact with wall");
-                //}
-                //else
-                //{
-                //    states.rigidbody.velocity = Vector3.zero;
-                //    Debug.Log("Not in contact with wall");
-                //}
-
 
             }
             
