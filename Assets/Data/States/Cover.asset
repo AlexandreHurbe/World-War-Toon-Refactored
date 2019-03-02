@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Cover
   m_EditorClassIdentifier: 
   onFixed:
-  - {fileID: 11400000, guid: b36ee92a82921ea4cb3d03f93561a525, type: 2}
   - {fileID: 11400000, guid: 0dbcde7fdd572264fb43689bd1d27003, type: 2}
+  - {fileID: 11400000, guid: b36ee92a82921ea4cb3d03f93561a525, type: 2}
   - {fileID: 11400000, guid: 0890ea792c8e94e49a3353befeaaa28c, type: 2}
   - {fileID: 11400000, guid: 5d080dbe40fd4e0418cbc91a8fd54fe6, type: 2}
   onUpdate:

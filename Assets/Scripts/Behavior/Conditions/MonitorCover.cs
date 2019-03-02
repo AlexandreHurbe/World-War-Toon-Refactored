@@ -25,7 +25,7 @@ namespace SA {
             RaycastHit hit;
             Vector3 origin = states.mTransform.position;
             origin.y += origin1Offset;
-            Vector3 direction = states.mTransform.forward;
+            Vector3 direction = states.movementValues.lookDirection;
 
             Debug.DrawRay(origin, direction * rayForwardDis, Color.blue);
 
@@ -50,20 +50,41 @@ namespace SA {
                     states.coverData.canStand = false;
                 }
 
+                //If the player can enter cover and wants to
                 if (states.coverState == StateManager.CoverState.isWantingToEnterCover)
                 {
                     states.anim.SetBool(states.hashes.isInteracting, true);
+
+                    //If the player is standing
                     if (states.coverData.canStand)
                     {
-                        Debug.Log("Cover can stand");
-                        states.anim.CrossFade(states.hashes.isEnteringCoverStanding, 0.15f);
-                        states.coverData.animLength = enterCoverStandingClip.length;
+                        //Play the animation with movement
+                        if (Vector3.Distance(states.mTransform.position, firstHit) > 0.4f)
+                        {
+                            Debug.Log("Distance longer than 0.4f");
+                            states.anim.CrossFade(states.hashes.isEnteringCoverStanding, 0.15f);
+                            states.coverData.animLength = enterCoverStandingClip.length;
+                        }
+                        //Just go straight into cover blend tree
+                        else
+                        {
+                            states.anim.CrossFade(states.hashes.coverStandingLocomotionLeft, 0.05f);
+                        }
                     }
+                    //If the player is crouching
                     else
                     {
-                        states.anim.CrossFade(states.hashes.isEnteringCoverCrouching, 0.15f);
-                        states.coverData.animLength = enterCoverCrouchingClip.length;
                         states.isCrouching = true;
+                        if (Vector3.Distance(states.mTransform.position, firstHit) > 0.4f)
+                        {
+                            states.anim.CrossFade(states.hashes.isEnteringCoverCrouching, 0.15f);
+                            states.coverData.animLength = enterCoverCrouchingClip.length;
+                        }
+                        else
+                        {
+                            states.anim.CrossFade(states.hashes.coverCrouchLocomotionLeft, 0.05f);
+                        }
+                        
                     }
 
                     states.coverData.isEnteringCoverInit = false;

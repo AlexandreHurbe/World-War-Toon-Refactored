@@ -74,10 +74,14 @@ namespace SA
                     {
                         return;
                     }
-                    else
+                    else if (playerStates.value.canEnterCover)
                     {
                         playerStates.value.coverState = StateManager.CoverState.isWantingToEnterCover;
                         Debug.Log("player wants to enter cover");
+                    }
+                    else
+                    {
+                        return;
 
                     }
                     

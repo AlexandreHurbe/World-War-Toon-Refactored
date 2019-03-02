@@ -11,10 +11,10 @@ namespace SA {
         public Vector3 endPosition;
         public Quaternion startRotation;
         public Quaternion endRotation;
-        public float enterCoverSpeed = 2f;
-        public float enterCoverRotation = 0.4f;
+        public float enterCoverSpeed = 1f;
+        public float enterCoverRotation = 1f;
 
-        public float coverPosOffset = 0.08f;
+        public float coverPosOffset = 0.3f;
 
         public bool canStand;
         public bool atCorner;

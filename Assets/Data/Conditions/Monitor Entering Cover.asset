@@ -15,8 +15,8 @@ MonoBehaviour:
   description: 
   origin1Offset: 0.7
   origin2Offset: 1
-  rayForwardDis: 1.5
-  rayHigherForwardDis: 1.5
+  rayForwardDis: 5
+  rayHigherForwardDis: 5
   enterCoverStandingClip: {fileID: 7400000, guid: 01b8901bb6665c144b8bf2d13b7f0697,
     type: 3}
   enterCoverCrouchingClip: {fileID: 7400000, guid: 720c6b3e1248e974f8bcdd349153f5a7,
