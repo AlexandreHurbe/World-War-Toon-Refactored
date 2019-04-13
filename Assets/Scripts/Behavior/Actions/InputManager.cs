@@ -63,7 +63,7 @@ namespace SA
                     playerStates.value.autoAim = false;
                 }
 
-                playerStates.value.isSprinting = sprintInput.isPressed;
+                
 
                 playerStates.value.isWantingToVault = vaultInput.isPressed;
                 //Debug.Log("Vault input pressed: " + vaultInput.isPressed);
@@ -107,12 +107,8 @@ namespace SA
                 }
                 reloadInput.targetBoolVariable.value = playerStates.value.isReloading;
 
-                //if (vaultInput.isPressed)
-                //{
-                //    playerStates.value.SetWantsToVault();
 
-                //}
-
+                SetSprinting(sprintInput.isPressed);
                 
                 if (cameraTransform.value != null)
                 {
@@ -127,5 +123,28 @@ namespace SA
                 
             }
         }
+
+        private void SetSprinting(bool active) {
+            if (active) {
+                //Sprint settings
+                sprintInput.targetBoolVariable.value = true;
+                playerStates.value.isSprinting = true;
+                //Shoot settings
+                shootInput.targetBoolVariable.value = false;
+                playerStates.value.isShooting = false;
+                //Aim settings
+                aimInput.targetBoolVariable.value = false;
+                playerStates.value.isAiming = false;
+                //Auto settings
+                autoAim.value = false;
+                playerStates.value.autoAim = false;
+            }
+
+            else {
+                sprintInput.targetBoolVariable.value = false;
+                playerStates.value.isSprinting = false;
+            }
+        }
+
     }
 }

@@ -201,6 +201,7 @@ namespace SA
             isCrouching = !isCrouching;
         }
 
+
         public void SetReloading()
         {
             isReloading = true;
