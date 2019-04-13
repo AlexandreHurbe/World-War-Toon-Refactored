@@ -130,6 +130,18 @@ namespace SA
 
                 else {
                     states.coverState = (StateManager.CoverState)stream.ReceiveNext();
+                    //Receving booleans if not vaulting
+                    states.isCrouching = (bool)stream.ReceiveNext();
+                    states.isSprinting = (bool)stream.ReceiveNext();
+                    states.isAiming = (bool)stream.ReceiveNext();
+                    states.isShooting = (bool)stream.ReceiveNext();
+                    states.isReloading = (bool)stream.ReceiveNext();
+
+                    //Receiving horizontal and vertical movement values
+                    states.movementValues.horizontal = (float)stream.ReceiveNext();
+                    states.movementValues.vertical = (float)stream.ReceiveNext();
+                    //Calculating move amounts
+                    states.movementValues.moveAmount = Mathf.Clamp01(Mathf.Abs(states.movementValues.horizontal) + Mathf.Abs(states.movementValues.vertical));
 
                     //If the player happens to be in cover
                     if (states.coverState == StateManager.CoverState.isEnteringCover) {
@@ -140,7 +152,7 @@ namespace SA
                         states.movementValues.moveAmount = 0;
                     }
                     else if (states.coverState == StateManager.CoverState.isInCover) {
-
+                        states.currentState = coverClient;
                     }
                     else if (states.coverState == StateManager.CoverState.isLeavingCover) {
                         //Setting horizontal and vertical movement values
@@ -152,24 +164,12 @@ namespace SA
 
                     //This means player is in default state
                     else {
-
                         if (states.vaultingFlag) {
                             states.vaultingFlag = false;
                             states.currentState = client;
                         }
 
-                        //Receving booleans if not vaulting
-                        states.isCrouching = (bool)stream.ReceiveNext();
-                        states.isSprinting = (bool)stream.ReceiveNext();
-                        states.isAiming = (bool)stream.ReceiveNext();
-                        states.isShooting = (bool)stream.ReceiveNext();
-                        states.isReloading = (bool)stream.ReceiveNext();
-
-                        //Receiving horizontal and vertical movement values
-                        states.movementValues.horizontal = (float)stream.ReceiveNext();
-                        states.movementValues.vertical = (float)stream.ReceiveNext();
-                        //Calculating move amounts
-                        states.movementValues.moveAmount = Mathf.Clamp01(Mathf.Abs(states.movementValues.horizontal) + Mathf.Abs(states.movementValues.vertical));
+                        
                     }
                 }
 

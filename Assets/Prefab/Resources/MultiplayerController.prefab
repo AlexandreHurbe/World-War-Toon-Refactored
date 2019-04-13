@@ -1482,6 +1482,7 @@ MonoBehaviour:
   initLocalPlayer: {fileID: 11400000, guid: 5b8cac6853ed8d4458e56aa5fa8151a7, type: 2}
   initClientPlayer: {fileID: 11400000, guid: 475c0ca6d45283944aa34794593a38a4, type: 2}
   vaultClient: {fileID: 11400000, guid: a843524dea1dedc438b04dd39400c759, type: 2}
+  coverClient: {fileID: 0}
   snapDistance: 4
   snapAngle: 40
   predictionSpeed: 10
