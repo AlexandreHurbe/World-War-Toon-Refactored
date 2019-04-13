@@ -10,6 +10,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7b70bab822f15f64f9e4f622f615213e, type: 3}
-  m_Name: isAutoAim
+  m_Name: combineAim
   m_EditorClassIdentifier: 
   value: 0

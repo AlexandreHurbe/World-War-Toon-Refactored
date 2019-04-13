@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: AnimIsAiming
   m_EditorClassIdentifier: 
   targetAnimVar: aiming
-  targetBoolVar: {fileID: 11400000, guid: 76873bd83fa2c0e45a9379809a05b3ec, type: 2}
+  targetBoolVar: {fileID: 11400000, guid: ba814a5e8992bac409b264faf9efc3ca, type: 2}
   reverse: 0

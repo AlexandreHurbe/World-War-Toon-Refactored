@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Input Manager
   m_EditorClassIdentifier: 
   autoAim: {fileID: 11400000, guid: cdf7c59b4da472d4fa764cf5ff97eab7, type: 2}
-  combinedAim: {fileID: 0}
+  combinedAim: {fileID: 11400000, guid: ba814a5e8992bac409b264faf9efc3ca, type: 2}
   horizontal: {fileID: 11400000, guid: 25ea266ec6224dd4f9a29eed2e547ea7, type: 2}
   vertical: {fileID: 11400000, guid: cf2d5151bc6bb68418e20049b88c9e3a, type: 2}
   aimInput: {fileID: 11400000, guid: e99caaad43adf5b4dba5b0338dc99575, type: 2}
@@ -24,7 +24,7 @@ MonoBehaviour:
   vaultInput: {fileID: 11400000, guid: d36a10a33fe7abe4fa9a2d7cb7b2cd67, type: 2}
   coverInput: {fileID: 11400000, guid: 1fa19843335073141b78458ac9030f1c, type: 2}
   moveAmount: 0
-  moveDir: {x: -0, y: 0, z: 0}
+  moveDir: {x: 0, y: 0, z: 0}
   cameraTransform: {fileID: 11400000, guid: ec5905637b0fbc541a80ed16d2997171, type: 2}
   pivotTransform: {fileID: 11400000, guid: 013deeadf9bd57f42926846b6256d527, type: 2}
   playerStates: {fileID: 11400000, guid: b182b1c5475d97c4d8090a536006034d, type: 2}
