@@ -13,6 +13,7 @@ namespace SA
         public StateActions initClientPlayer;
 
         public State vaultClient;
+        public State coverClient;
 
         private StateManager states;
         private Transform mTransform;
@@ -74,8 +75,9 @@ namespace SA
                 stream.SendNext(states.isVaulting);
                 if (!states.isVaulting)
                 {
-                    stream.SendNext(states.isSprinting);
+                    stream.SendNext(states.coverState);
                     stream.SendNext(states.isCrouching);
+                    stream.SendNext(states.isSprinting);
                     stream.SendNext(states.isAiming);
                     stream.SendNext(states.shootingFlag);
                     states.shootingFlag = false;
@@ -91,10 +93,10 @@ namespace SA
                 stream.SendNext(states.movementValues.aimPosition);
 
             }
+
             //receiving data
             else
             {
-
                 //Receiving Position and rotation and related functions
                 Vector3 position = (Vector3)stream.ReceiveNext();
                 Quaternion rotation = (Quaternion)stream.ReceiveNext();
@@ -102,6 +104,7 @@ namespace SA
 
                 //Receving booleans
                 states.isVaulting = (bool)stream.ReceiveNext();
+                
                 if (states.isVaulting)
                 {
                     //Setting other booleans as false while vaulting since they cannot happen
@@ -123,29 +126,53 @@ namespace SA
                         states.anim.CrossFade(states.hashes.VaultWalk, 0.15f);
                         states.currentState = vaultClient;
                     }
-
                 }
-                else
-                {
-                    if (states.vaultingFlag)
-                    {
-                        states.vaultingFlag = false;
-                        states.currentState = client;
+
+                else {
+                    states.coverState = (StateManager.CoverState)stream.ReceiveNext();
+
+                    //If the player happens to be in cover
+                    if (states.coverState == StateManager.CoverState.isEnteringCover) {
+                        //Setting horizontal and vertical movement values
+                        states.movementValues.horizontal = 0;
+                        states.movementValues.vertical = 0;
+                        //Setting move amounts while entering cover
+                        states.movementValues.moveAmount = 0;
+                    }
+                    else if (states.coverState == StateManager.CoverState.isInCover) {
+
+                    }
+                    else if (states.coverState == StateManager.CoverState.isLeavingCover) {
+                        //Setting horizontal and vertical movement values
+                        states.movementValues.horizontal = 0;
+                        states.movementValues.vertical = 0;
+                        //Setting move amounts while leaving cover
+                        states.movementValues.moveAmount = 0;
                     }
 
-                    //Receving booleans if not vaulting
-                    states.isSprinting = (bool)stream.ReceiveNext();
-                    states.isCrouching = (bool)stream.ReceiveNext();
-                    states.isAiming = (bool)stream.ReceiveNext();
-                    states.isShooting = (bool)stream.ReceiveNext();
-                    states.isReloading = (bool)stream.ReceiveNext();
+                    //This means player is in default state
+                    else {
 
-                    //Receiving horizontal and vertical movement values
-                    states.movementValues.horizontal = (float)stream.ReceiveNext();
-                    states.movementValues.vertical = (float)stream.ReceiveNext();
-                    //Calculating move amounts
-                    states.movementValues.moveAmount = Mathf.Clamp01(Mathf.Abs(states.movementValues.horizontal) + Mathf.Abs(states.movementValues.vertical));  
+                        if (states.vaultingFlag) {
+                            states.vaultingFlag = false;
+                            states.currentState = client;
+                        }
+
+                        //Receving booleans if not vaulting
+                        states.isCrouching = (bool)stream.ReceiveNext();
+                        states.isSprinting = (bool)stream.ReceiveNext();
+                        states.isAiming = (bool)stream.ReceiveNext();
+                        states.isShooting = (bool)stream.ReceiveNext();
+                        states.isReloading = (bool)stream.ReceiveNext();
+
+                        //Receiving horizontal and vertical movement values
+                        states.movementValues.horizontal = (float)stream.ReceiveNext();
+                        states.movementValues.vertical = (float)stream.ReceiveNext();
+                        //Calculating move amounts
+                        states.movementValues.moveAmount = Mathf.Clamp01(Mathf.Abs(states.movementValues.horizontal) + Mathf.Abs(states.movementValues.vertical));
+                    }
                 }
+
 
                 //Receiving aim position
                 states.movementValues.aimPosition = (Vector3)stream.ReceiveNext();
