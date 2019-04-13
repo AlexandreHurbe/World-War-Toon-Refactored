@@ -12,6 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 650dbd272eaf53142a8dc12347cd54db, type: 3}
   m_Name: Input Manager
   m_EditorClassIdentifier: 
+  autoAim: {fileID: 11400000, guid: cdf7c59b4da472d4fa764cf5ff97eab7, type: 2}
+  combinedAim: {fileID: 0}
   horizontal: {fileID: 11400000, guid: 25ea266ec6224dd4f9a29eed2e547ea7, type: 2}
   vertical: {fileID: 11400000, guid: cf2d5151bc6bb68418e20049b88c9e3a, type: 2}
   aimInput: {fileID: 11400000, guid: e99caaad43adf5b4dba5b0338dc99575, type: 2}

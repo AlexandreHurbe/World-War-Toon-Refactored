@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5fd90b1864ca6d34eb05c10faa54f7bd, type: 3}
   m_Name: SwitchFromNormalToAimingMovementDuo
   m_EditorClassIdentifier: 
-  targetBool1: {fileID: 0}
-  targetBool2: {fileID: 0}
-  onFalseAction: {fileID: 0}
-  onTrueAction: {fileID: 0}
+  targetBool1: {fileID: 11400000, guid: 76873bd83fa2c0e45a9379809a05b3ec, type: 2}
+  targetBool2: {fileID: 11400000, guid: cdf7c59b4da472d4fa764cf5ff97eab7, type: 2}
+  onFalseAction: {fileID: 11400000, guid: 5778e7bd5a5758c4080e91d284b001f4, type: 2}
+  onTrueAction: {fileID: 11400000, guid: 04e4cbe4e790bd244b6bb9ebc4cf4540, type: 2}

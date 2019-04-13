@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   onFixed:
   - {fileID: 11400000, guid: 18558f0c981b443489144262cbe2752f, type: 2}
-  - {fileID: 11400000, guid: eceacb3bd68c41241a7472d0a988954e, type: 2}
-  - {fileID: 11400000, guid: 0b857b72b7751e84081de21773f9eb19, type: 2}
+  - {fileID: 11400000, guid: d772fc0090903754aa9a1474ce21e5fb, type: 2}
+  - {fileID: 11400000, guid: b74ebaf5c9625e44283c27770ee70861, type: 2}
   - {fileID: 11400000, guid: 865aba42b5a544d4bb80929d19584f0d, type: 2}
   - {fileID: 11400000, guid: 5d080dbe40fd4e0418cbc91a8fd54fe6, type: 2}
   onUpdate:

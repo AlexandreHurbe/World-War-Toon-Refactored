@@ -9,6 +9,7 @@ namespace SA
     public class InputManager : Action
     {
         public SO.BoolVariable autoAim;
+        public SO.BoolVariable combinedAim;
         public InputAxis horizontal;
         public InputAxis vertical;
         public InputButton aimInput;
@@ -109,7 +110,10 @@ namespace SA
 
 
                 SetSprinting(sprintInput.isPressed);
-                
+
+                //Sets this for the animator
+                combinedAim.value = (playerStates.value.isAiming || autoAim.value);
+
                 if (cameraTransform.value != null)
                 {
                     playerStates.value.movementValues.lookDirection = cameraTransform.value.forward;
