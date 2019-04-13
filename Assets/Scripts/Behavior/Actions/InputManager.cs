@@ -8,8 +8,7 @@ namespace SA
     [CreateAssetMenu (menuName = "Inputs/ Input Manager")]
     public class InputManager : Action
     {
-        //public bool debugAim;
-
+        public SO.BoolVariable autoAim;
         public InputAxis horizontal;
         public InputAxis vertical;
         public InputButton aimInput;
@@ -50,11 +49,19 @@ namespace SA
                 playerStates.value.movementValues.moveDirection = moveDir;
                 
 
+                
                 playerStates.value.isShooting = shootInput.isPressed;
-                //Debug.Log("Shoot input pressed: " + shootInput.isPressed);
 
                 playerStates.value.isAiming = aimInput.isPressed;
 
+                if (!aimInput.isPressed) {
+                    autoAim.value = shootInput.isPressed;
+                    playerStates.value.autoAim = shootInput.isPressed;
+                }
+                else {
+                    autoAim.value = false;
+                    playerStates.value.autoAim = false;
+                }
 
                 playerStates.value.isSprinting = sprintInput.isPressed;
 

@@ -10,7 +10,11 @@ namespace SA
         {
             states.anim.SetBool(states.hashes.isCrouching, states.isCrouching);
             states.anim.SetBool(states.hashes.aiming, states.isAiming);
-            
+
+            if (states.isShooting && !states.isAiming) {
+                states.anim.SetBool(states.hashes.aiming, true);
+            }
+
         }
     }
 }

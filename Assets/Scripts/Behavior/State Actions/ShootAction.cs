@@ -42,8 +42,12 @@ namespace SA
                 
             }
 
+            else if (states.isShooting && !states.isAiming) 
+            {
+                //Commence the wait before being able to shoot
+            }
 
-            if (states.isShooting)
+            if (states.isShooting && !states.isReloading)
             {
                 states.shootingFlag = true;
                 states.isShooting = false;
@@ -85,6 +89,8 @@ namespace SA
                 
             }
         }
+
+
 
         public void ReloadCurrentWeapon(Weapon currentWeapon)
         {

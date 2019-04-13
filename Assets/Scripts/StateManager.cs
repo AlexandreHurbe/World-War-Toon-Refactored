@@ -33,6 +33,7 @@ namespace SA
         public int photonId;
 
         public bool isLocal;
+        public bool autoAim;
         public bool isAiming;
         public bool isInteracting;
         public bool isShooting;
