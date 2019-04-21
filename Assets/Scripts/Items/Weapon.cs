@@ -24,13 +24,16 @@ namespace SA {
         public bool overrideBallistics;
         public Ballistics ballistics;
 
+        public AudioClip shootAudio;
+        public AudioClip reloadAudio;
+
 
         public void Init()
         {
             runtime = new RuntimeWeapon();
             runtime.modelInstance = Instantiate(modelPrefab) as GameObject;
             runtime.weaponHook = runtime.modelInstance.GetComponent<WeaponHook>();
-            runtime.weaponHook.Init();
+            runtime.weaponHook.Init(shootAudio, reloadAudio);
 
             ammoType = GameManagers.GetAmmoPool().GetAmmo(ammoType.name);
         }

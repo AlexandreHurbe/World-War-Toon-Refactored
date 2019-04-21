@@ -17,7 +17,7 @@ MonoBehaviour:
   fireRate: 0.1
   ammoType: {fileID: 11400000, guid: e757303bece6e3843b86df8d959abdb1, type: 2}
   rightHandPosition: {fileID: 11400000, guid: b7c0c73b47c9946498e3bc28ddc12011, type: 2}
-  rightHandEulers: {fileID: 11400000, guid: 55052a5917682ba4592062ddae0892d9, type: 2}
+  rightHandEulers: {fileID: 11400000, guid: b0ccfa8c84296104bbdf0db283ab234a, type: 2}
   modelPrefab: {fileID: 2079073070766644437, guid: bb2c78dd2ac37fb4a92c03a9e996fc86,
     type: 3}
   recoilY:
@@ -32,3 +32,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  overrideBallistics: 0
+  ballistics: {fileID: 0}
+  shootAudio: {fileID: 8300000, guid: bc0e9f2abba401e4d841e335bf95e4ef, type: 3}
+  reloadAudio: {fileID: 8300000, guid: a74ee28beb7e699429e8347420f47b08, type: 3}

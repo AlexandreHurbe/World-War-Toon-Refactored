@@ -109,7 +109,7 @@ namespace SA
 
             //target main hand weight
             float t_m_weight = 0;
-            if (states.isAiming)
+            if (states.isAiming || states.autoAim)
             {
                 t_m_weight = 1;
                 b_weight = 0.4f;

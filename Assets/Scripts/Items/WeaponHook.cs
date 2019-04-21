@@ -10,6 +10,8 @@ public class WeaponHook : MonoBehaviour
 
     private ParticleSystem[] particles;
     private AudioSource audioSource;
+    private AudioClip shootAudio;
+    private AudioClip reloadAudio;
 
     public Transform slider;
     public AnimationCurve sliderCurve;
@@ -21,7 +23,7 @@ public class WeaponHook : MonoBehaviour
     public bool isShooting;
     bool initSliderLerp;
 
-    public void Init()
+    public void Init(AudioClip shootAudio, AudioClip reloadAudio)
     {
         if (slider != null)
         {
@@ -34,13 +36,16 @@ public class WeaponHook : MonoBehaviour
         go.transform.parent = this.transform;
         audioSource = go.AddComponent<AudioSource>();
         audioSource.spatialBlend = 1;
-
+        this.shootAudio = shootAudio;
+        this.reloadAudio = reloadAudio;
         particles = transform.GetComponentsInChildren<ParticleSystem>();
     }
 
     public void Shoot()
     {
         isShooting = true;
+
+        audioSource.PlayOneShot(shootAudio);
 
         if (particles != null)
         {
@@ -50,6 +55,10 @@ public class WeaponHook : MonoBehaviour
             }
 
         }
+    }
+
+    public void Reload() {
+        audioSource.PlayOneShot(reloadAudio);
     }
 
     private void Update()

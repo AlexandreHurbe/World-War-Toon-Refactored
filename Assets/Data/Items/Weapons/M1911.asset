@@ -88,3 +88,5 @@ MonoBehaviour:
     m_RotationOrder: 4
   overrideBallistics: 0
   ballistics: {fileID: 0}
+  shootAudio: {fileID: 8300000, guid: 577ff6967b8219e40bf9e93779db8d1b, type: 3}
+  reloadAudio: {fileID: 8300000, guid: d70acaddc495e674e8f81c178e859f98, type: 3}

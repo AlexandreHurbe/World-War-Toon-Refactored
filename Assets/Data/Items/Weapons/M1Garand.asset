@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentBullets: 30
   magazineBullets: 30
-  fireRate: 0.2
+  fireRate: 0.3
   ammoType: {fileID: 11400000, guid: 788ddd19906e64b448725311c71d6d18, type: 2}
   rightHandPosition: {fileID: 11400000, guid: b7c0c73b47c9946498e3bc28ddc12011, type: 2}
   rightHandEulers: {fileID: 11400000, guid: 55052a5917682ba4592062ddae0892d9, type: 2}
@@ -86,3 +86,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  overrideBallistics: 0
+  ballistics: {fileID: 0}
+  shootAudio: {fileID: 8300000, guid: 910fb4c6ad192f0499eb2278ebf5bc9a, type: 3}
+  reloadAudio: {fileID: 8300000, guid: d70acaddc495e674e8f81c178e859f98, type: 3}

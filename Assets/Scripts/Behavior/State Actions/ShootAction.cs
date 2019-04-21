@@ -21,6 +21,7 @@ namespace SA
                         states.reloadingFlag = true;
                         states.isInteracting = true;
                         states.PlayAnimation("Rifle Reload");
+                        states.inventory.currentWeapon.runtime.weaponHook.Reload();
                         states.anim.SetBool("isInteracting", true);
                     }
                     else
@@ -97,6 +98,7 @@ namespace SA
             currentWeapon.ammoType.carryingAmount += currentWeapon.currentBullets;
             if (currentWeapon.ammoType.carryingAmount > currentWeapon.magazineBullets)
             {
+                
                 currentWeapon.currentBullets = currentWeapon.magazineBullets;
                 currentWeapon.ammoType.carryingAmount -= currentWeapon.currentBullets;
             }
@@ -110,15 +112,6 @@ namespace SA
             {
                 Debug.Log("Completely out of ammo");
             }
-
-            //int target = currentWeapon.magazineBullets;
-            //if (target > currentWeapon.ammoType.carryingAmount)
-            //{
-            //    target = currentWeapon.magazineBullets - currentWeapon.ammoType.carryingAmount;
-
-            //}
-            //currentWeapon.ammoType.carryingAmount -= target;
-            //currentWeapon.currentBullets = target;
         }
     }
 }
